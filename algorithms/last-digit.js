@@ -40,3 +40,5 @@ var lastDigit = function(str1, str2){
   const index = secondNum % order.length;
   return index === 0 ? order[order.length - 1] : order[index - 1];
 }
+
+module.exports = lastDigit;
