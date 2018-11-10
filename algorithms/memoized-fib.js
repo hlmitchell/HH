@@ -13,3 +13,7 @@ const fibonacci = (n) => {
   inner(n);
   return memoized[n];
 }
+
+console.log(fibonacci(10));
+console.log(fibonacci(20));
+console.log(fibonacci(100));
