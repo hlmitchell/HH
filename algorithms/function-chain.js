@@ -21,3 +21,14 @@
 // addTwo(3)(5); // 10
 // We can assume any number being passed in will be valid whole number.
 
+function add(n){
+  const func = (x) => {
+    return add(n + x);
+  };
+  
+  func.valueOf = () => {
+    return n;
+  };
+  
+  return func;
+}
