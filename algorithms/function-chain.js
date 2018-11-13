@@ -32,3 +32,7 @@ function add(n){
   
   return func;
 }
+
+const addTwo = add(2);
+console.log(addTwo(3)); // 5
+console.log(addTwo(3)(5)); // 10
