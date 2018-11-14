@@ -12,11 +12,7 @@
 
 function uniqueNumber(array) {
   if (!Array.isArray(array) || array.length === 0) return;
-  let result = 0;
-  for (let i = 0; i < array.length; i++) {
-    result = result ^ array[i];
-  }
-  return result;
+  return array.reduce((acc, next) => acc ^ next, 0);
 }
 
 console.log(uniqueNumber([1,2,1,3,3])); // -> 2
