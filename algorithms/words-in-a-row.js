@@ -17,15 +17,31 @@ function findWordsInARow(keys, words) {
   const result = []
   // find total of ascii values from all keys added together
   const totalOfKeys = keys.reduce((acc, next) => {
-    return next.split('').reduce((subAcc, subNext) => {
+    return acc + next.split('').reduce((subAcc, subNext) => {
       return subAcc + subNext.charCodeAt();
     }, 0)
   }, 0)
 
-  const mappedAsciiVals = [];
-  
+  let mappedAsciiVals = [];
+  for (let i = 0; i < words.length; i++) {
+    // first index, cannot add any ascii that came previously
+    if (i === 0) mappedAsciiVals.push(words[i].split('').reduce((acc, next) => acc + next.charCodeAt(), 0));
+    // add previous asciis to the current val
+    else if (i <= keys.length) {
+      const newAscii = words[i].split('').reduce((acc, next) => acc + next.charCodeAt(), 0);
+      mappedAsciiVals.push(newAscii + mappedAsciiVals[i - 1]);
+    } 
+    // add previous ascii but not subtract the ascii the length of keys array away
+    else {
+      const newAscii = words[i].split('').reduce((acc, next) => acc + next.charCodeAt(), 0);
+      mappedAsciiVals.push(newAscii + mappedAsciiVals[i - 1] - mappedAsciiVals[i - keys.length]);
+    }
+  }
+
+  mappedAsciiVals = mappedAsciiVals.slice(keys.length - 1, mappedAsciiVals.length);
+  return mappedAsciiVals;
 }
 
-const keys = ['hi', 'bye', 'sup'];
-const words = ['taco', 'hi', 'sup', 'bye', 'hi', 'taco'];
+const keys = ['hi', 'water', 'sup'];
+const words = ['taco', 'hi', 'sup', 'water', 'hi', 'taco'];
 console.log(findWordsInARow(keys, words)); // [1,2]
