@@ -15,6 +15,6 @@ function findWordsInARow(keys, words) {
 
 }
 
-const keys = ['hi', 'bye' 'sup']
-const words = ['taco', 'hi', 'sup', 'bye', 'hi', 'taco']
+const keys = ['hi', 'bye', 'sup'];
+const words = ['taco', 'hi', 'sup', 'bye', 'hi', 'taco'];
 console.log(findWordsInARow(keys, words)); // [1,2]
