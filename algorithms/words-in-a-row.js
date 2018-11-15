@@ -11,8 +11,19 @@
 // const words = ['taco', 'hi', 'sup', 'bye', 'hi', 'taco']
 // console.log(findWordsInARow(keys, words)); // [1,2]
 
-function findWordsInARow(keys, words) {
+// SOLVE IN O(n) TIME
 
+function findWordsInARow(keys, words) {
+  const result = []
+  // find total of ascii values from all keys added together
+  const totalOfKeys = keys.reduce((acc, next) => {
+    return next.split('').reduce((subAcc, subNext) => {
+      return subAcc + subNext.charCodeAt();
+    }, 0)
+  }, 0)
+
+  const mappedAsciiVals = [];
+  
 }
 
 const keys = ['hi', 'bye', 'sup'];
