@@ -49,4 +49,8 @@ function balancedParens(input){
   return stack.length > 0 ? false : true;
 }
 
+console.log(balancedParens('[](){}')); // true
+console.log(balancedParens('[({})]')); // true
+console.log(balancedParens('[(]{)}')); // false
+
 module.exports = balancedParens;
