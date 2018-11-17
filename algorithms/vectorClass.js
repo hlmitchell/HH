@@ -49,6 +49,13 @@ class Vector {
       return acc + (next * newVector.array[i]);
     }, 0);
   }
+
+  norm() {
+    const squaredSum = this.array.reduce((acc, next) => {
+      return acc + Math.pow(next, 2);
+    }, 0)
+    return Math.sqrt(squaredSum);
+  }
   
 };
 
@@ -57,7 +64,7 @@ let b = new Vector([3, 4, 5]);
 let c = new Vector([5, 6, 7, 8]);
 
 console.log(a.add(b));      // should return a new Vector([4, 6, 8])
+console.log(a.add(c));      // should return a new Vector([6, 8, 10, 8])
 console.log(a.subtract(b)); // should return a new Vector([-2, -2, -2])
 console.log(a.dot(b));      // should return 1*3 + 2*4 + 3*5 = 26
-// console.log(a.norm());      // should return sqrt(1^2 + 2^2 + 3^2) = sqrt(14)
-// console.log(a.add(c));      // throws an error
+console.log(a.norm());      // should return sqrt(1^2 + 2^2 + 3^2) = sqrt(14)
