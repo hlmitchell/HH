@@ -39,8 +39,95 @@
 //   (i.e. the function will not be called with 'Jul 84th 1:00 PM') since that's not a real date
 // - if any part of the date string is missing then you can consider it an invalid date
 
+const DAYS = {
+  'sunday': 0,
+  'monday': 1,
+  'tuesday': 2,
+  'wednesday': 3,
+  'thursday': 4,
+  'friday': 5,
+  'saturday': 6
+};
+
+const MONTHS = {
+  'jan': 0,
+  'feb': 1,
+  'mar': 2,
+  'apr': 3,
+  'may': 4,
+  'jun': 5,
+  'jul': 6,
+  'aug': 7,
+  'sep': 8,
+  'oct': 9,
+  'nov': 10,
+  'dec': 11
+};
+
 function parseDates(str) {
+  var date, ampm, times, month, dayOfMonth, day, hour, min;
+  var sections = str.toLowerCase().split(' ');
   
+  date = new Date();
+  
+  // checks all formating conditions to make sure input matches one valid parsing format
+  if (!/^[a-zA-Z]{3,9}\s([0-9]{1,2}[a-z]{2}\s)?[0-9]{1,2}:[0-9]{2}\s(AM|PM)/.test(str)) return date;
+  
+  // if the first word of the input string is a day
+  // Thursday 12:37 PM
+  if (DAYS.hasOwnProperty(sections[0])) {
+    
+    // we have a day of week for the past week    
+    day = sections[0];
+    ampm = sections[2];
+    times = sections[1].split(':');
+    hour = parseInt(times[0]);
+    min = parseInt(times[1]);
+    
+    // if the input day is Wednesday and today is Wednesday, we want to use last Wednesday's date
+    // therefore we subtract one day to start to handle that possibility
+    date.setDate(date.getDate() - 1);
+    while(date.getDay() !== DAYS[day]) {
+      date.setDate(date.getDate() - 1);
+    } 
+  }
+  
+  // if the first word of the input is a month
+  // Nov 19th 1:12 PM
+  else if (sections[0] in MONTHS) {
+    
+    // we have a month in the past year
+    month = MONTHS[sections[0]];
+    // the regex here extracs the decimal from the string (so save 19 from 19th)
+    dayOfMonth = parseInt(sections[1].replace(/[^\d]/g, ""));
+    times = sections[2].split(':');
+    hour = parseInt(times[0]);
+    min = parseInt(times[1]);
+    ampm = sections[3];
+    
+    date.setMonth(month);
+    date.setDate(dayOfMonth);
+  }
+  
+  // if the first word of the input is today
+  // Today 2:01 PM
+  else if (sections[0] === 'today') {
+    ampm = sections[2];
+    times = sections[1].split(':');
+    hour = parseInt(times[0]);
+    min = parseInt(times[1]); 
+  }
+  
+  if (ampm === 'am' && hour === 12) {
+    hour = 0;
+  } else if (ampm === 'pm' && hour < 12) {
+    hour = hour + 12;
+  }
+  
+  date.setHours(hour);
+  date.setMinutes(min);
+
+  return date;
 }
 
 module.exports = parseDates;
