@@ -15,6 +15,8 @@
 
 function mergeArrays(arr1, arr2) {
   if (!Array.isArray(arr1) || !Array.isArray(arr2)) return;
+  if (arr2.length === 0) return arr1;
+  if (arr1.length === 0) return arr2;
   const merged = [];
   let i = 0;
   let j = 0;
