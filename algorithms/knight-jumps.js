@@ -10,4 +10,36 @@
 //  example input:
 // var str = "(4 5)"
 
+function knightjumps(str) {
+  // edge cases
+  if (typeof str !== 'string' || str.length < 5 || str.length > 5) return 0;
+  const x = parseInt(str[1]);
+  if (isNaN(x) || x < 1 || x > 8) return 0;
+  const y = parseInt(str[3]);
+  if (isNaN(y) || y < 1 || y > 8) return 0;
+
+  let count = 0;
+  // left and right movement
+  if (x + 2 <= 8) {
+    if (y + 1 <= 8) count += 1;
+    if (y - 1 > 0) count += 1;
+  }
+  if (x - 2 > 0) {
+    if (y + 1 <= 8) count += 1;
+    if (y - 1 > 0) count += 1;
+  }
+
+  // upward and downward movement
+  if (y + 2 <= 8) {
+    if (x + 1 <= 8) count += 1;
+    if (x - 1 > 0) count += 1;
+  }
+  if (y - 2 > 0) {
+    if (x + 1 <= 8) count += 1;
+    if (x - 1 > 0) count += 1;
+  }
+
+  return count;
+}
+
 module.exports = knightjumps;
