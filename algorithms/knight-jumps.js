@@ -9,3 +9,5 @@
 // from position x = 4 and y = 5.
 //  example input:
 // var str = "(4 5)"
+
+module.exports = knightjumps;
