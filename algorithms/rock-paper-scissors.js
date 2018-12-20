@@ -1,20 +1,20 @@
-var rockPaperScissors = function(numOfRounds) {
-  var options = ['rock', 'paper', 'scissors'];
-  var result = [];
+function rockPaperScissors(num) {
+  const arr = ['rock', 'paper', 'scissors'];
+  const result = [];
   
-  function roops(round, roundNumber) {
-    for (let i = 0; i < options.length; i++){
-      round.push(options[i]);
-      if(roundNumber === numOfRounds){
-        result.push(round.slice());
-      }else{
-        roundChoice(round, roundNumber + 1);
+  function roops(solo = [], count = 1) {
+    for (let i = 0; i < arr.length; i += 1){
+      solo.push(arr[i]);
+      if (count === num){
+        result.push(solo.slice());
+      } else {
+        roops(solo, count + 1);
       }
-      round.pop();
+      solo.pop();
     }
   }
-  roops([], 1);
+  roops();
   return result;
 }
 
-rockPaperScissors(3);
+console.log(rockPaperScissors(3));
