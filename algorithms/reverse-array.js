@@ -1,10 +1,10 @@
 // Write a function that takes an array of characters and reverses the letters in place.
 
-function reverseArray(arr) {
+function reverseArray(arr, front = 0, back = arr.length - 1) {
   if (!Array.isArray(arr)) return arr;
 
-  let front = 0;
-  let back = arr.length - 1;
+  // let front = 0;
+  // let back = arr.length - 1;
   let temp;
 
   while (front < back) {
@@ -19,4 +19,6 @@ function reverseArray(arr) {
   return arr;
 }
 
-console.log(reverseArray([1,2,3,4,5]));
+// console.log(reverseArray([1,2,3,4,5]));
+
+module.exports = reverseArray;
