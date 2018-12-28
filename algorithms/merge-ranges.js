@@ -13,6 +13,8 @@
 // Write a function mergeRanges() that takes an array of multiple meeting time ranges and returns 
 // an array of condensed ranges.
 
+// Do not assume the meetings are in order. The meeting times are coming from multiple teams.
+
 const input = [
   { startTime: 0,  endTime: 1 },
   { startTime: 3,  endTime: 5 },
