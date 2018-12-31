@@ -13,3 +13,23 @@
 // Assume your users will watch exactly two movies
 // Don't make your users watch the same movie twice
 // Optimize for runtime over memory
+
+function flightLength(flight, movies) {
+  const movieSet = new Set();
+  const options = [];
+  
+  for (let i = 0; i < movies.length; i++) {
+    const pairing = movieSet.has(flight - movies[i]);
+    if (pairing) {
+      options.push({
+        firstMovie: movies[i],
+        secondMovie: pairing
+      })
+    }
+    if (!movieSet.has(movies[i])) movieSet.add(movies[i]);
+  }
+
+  return options;
+}
+
+flightLength()
