@@ -9,11 +9,18 @@
 // "civil" should return false
 // "livci" should return false
 
-function permutationPalindrome() {
+function permutationPalindrome(word) {
+  const letterSet = new Set();
 
+  for (let i = 0; i < word.length; i++) {
+    if (letterSet.has(word[i])) letterSet.delete(word[i]);
+    else letterSet.add(word[i]);
+  }
+
+  return letterSet.size <= 1;
 }
 
-console.log(permutationPalindrome());
-console.log(permutationPalindrome());
-console.log(permutationPalindrome());
-console.log(permutationPalindrome());
+console.log(permutationPalindrome('civic'));
+console.log(permutationPalindrome('ivicc'));
+console.log(permutationPalindrome('civil'));
+console.log(permutationPalindrome('livci'));
