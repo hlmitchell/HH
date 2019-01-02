@@ -17,12 +17,14 @@
 // cases like "After" and "Dana".
 
 function wordCloud(sentence) {
+  // in reality, I would check if the ascii characters were in the correct range for just letters
   const punc = new Set();
   punc.add(',');
   punc.add('.');
   punc.add(':');
   punc.add(' ');
   punc.add('');
+  punc.add('-');
 
   const frequency = {};
 
