@@ -16,10 +16,24 @@
 // Also, you can't buy and sell in the same time step—at least 1 minute has to pass.
 
 function getMaxProfit(prices) {
-  
+  let minPrice = stockPrices[0];
+  let maxProfit = stockPrices[1] - stockPrices[0];
+
+  for (let i = 1; i < prices.length; i++) {
+    const currentPrice = stockPrices[i];
+    // See what our profit would be if we bought at the
+    // min price and sold at the current price
+    const potentialProfit = currentPrice - minPrice;
+    // Update maxProfit if we can do better
+    maxProfit = Math.max(maxProfit, potentialProfit);
+    // Update minPrice so it's always
+    // the lowest price we've seen so far
+    minPrice = Math.min(minPrice, currentPrice);
+  }
+  return maxProfit;
 }
 
-const stockPrices = [10, 7, 5, 8, 11, 9];
+const stockPrices = [10, 7, 5, 8, 11, 1, 2];
 
-getMaxProfit(stockPrices);
+console.log(getMaxProfit(stockPrices));
 // Returns 6 (buying for $5 and selling for $11)
