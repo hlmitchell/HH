@@ -18,8 +18,28 @@
 
 // Here's the catch: You can't use division in your solution!
 
-function getProductsOfAllIntsExceptAtIndex() {
+function getProductsOfAllIntsExceptAtIndex(arr) {
+  const output = [];
+  let zeros = 0;
+  let product = 1;
 
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === 0) zeros += 1;
+    if (zeros >= 2) return new Array(arr.length).fill(0);
+
+    output.push(product);
+    product *= arr[i];
+  }
+
+  product = 1;
+
+  for (let i = arr.length - 1; i >= 0; i--) {
+    output[i] *= product;
+    product *= arr[i];
+  }
+
+  return output;
 }
 
 console.log(getProductsOfAllIntsExceptAtIndex([1, 7, 3, 4]));
+console.log(getProductsOfAllIntsExceptAtIndex([1, 7, 3, 4, 0, 0]));
