@@ -4,15 +4,13 @@
 
 
 function highestOfThree(integers) {
-  let nums = integers.slice(0, 3);
-  
-  for (let i = 1; i < integers.length; i++) {
-    nums.sort();
-    if (integers[i] > nums[0]) nums[0] = integers[i];
-  }
-
-  return nums;
+  integers.sort();
+  const potentialSum1 = integers[integers.length - 1] * integers[integers.length - 2] * integers[integers.length - 3];
+  const potentialSum2 = integers[0] * integers[1] * integers[integers.length - 1];
+  return Math.max(potentialSum1, potentialSum2);
 }
 
-const integers = [8,2,6,5,7,3];
+const integers = [8,2,6,5,7,3,-10,-10];
+const integers2 = [8,2,6,5,7,3];
 console.log(highestOfThree(integers));
+console.log(highestOfThree(integers2));
