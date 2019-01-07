@@ -31,19 +31,19 @@ function findRotationPoint(words) {
 }
 
 
-// const words = [
-//   'ptolemaic',
-//   'retrograde',
-//   'supplant',
-//   'undulate',
-//   'xenoepist',
-//   'asymptote',  // <-- rotates here!
-//   'babka',
-//   'banoffee',
-//   'engender',
-//   'karpatka',
-//   'othellolagkage',
-// ];
+const words = [
+  'ptolemaic',
+  'retrograde',
+  'supplant',
+  'undulate',
+  'xenoepist',
+  'asymptote',  // <-- rotates here!
+  'babka',
+  'banoffee',
+  'engender',
+  'karpatka',
+  'othellolagkage',
+];
 
 const nums = [4,5,1,2,3];
 const nums2 = [9,1,2,3,4,5,6,7,8];
@@ -52,3 +52,4 @@ const nums3 = [4,5,6,7,8,7,9,2];
 console.log(findRotationPoint(nums));
 console.log(findRotationPoint(nums2));
 console.log(findRotationPoint(nums3));
+console.log(findRotationPoint(words));
