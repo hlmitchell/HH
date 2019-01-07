@@ -10,17 +10,26 @@
 // of the dictionary. This array is huge (there are lots of words I don't know) so we want to be efficient here.
 
 function findRotationPoint(words) {
-  const middle = words[Math.floor(words.length - 1)];
+  const firstWord = words[0];
+  let start = 0;
+  let end = words.length - 1;
+  let middle;
 
-  function inner(start, tempMid, end) {
-    // base case
+  while (start < end) {
+    // find middle index
+    middle = Math.floor((start + end) / 2);
 
-    // check if the tempMid is the point of rotation
-    if (words[tempMid - 1] > words[tempMid]) return words[tempMid];
+    // If words at middle index comes after first word or is the first word
+    if (words[middle] >= firstWord) start = middle + 1; // move right
+    else {
+      // check if this number if the point of rotation (middle - 1 checks if the array was given in order from the beginning)
+      if (middle - 1 < 0 || words[middle - 1] > firstWord) return words[middle];
+      end = middle - 1; // move left
+    }
   }
-
-  inner(0, middle, words.length - 1);
+  return words[end];
 }
+
 
 // const words = [
 //   'ptolemaic',
@@ -40,4 +49,6 @@ const nums = [4,5,1,2,3];
 const nums2 = [9,1,2,3,4,5,6,7,8];
 const nums3 = [4,5,6,7,8,7,9,2];
 
-console.log(findRotationPoint(words));
+console.log(findRotationPoint(nums));
+console.log(findRotationPoint(nums2));
+console.log(findRotationPoint(nums3));
