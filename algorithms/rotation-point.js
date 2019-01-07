@@ -10,21 +10,34 @@
 // of the dictionary. This array is huge (there are lots of words I don't know) so we want to be efficient here.
 
 function findRotationPoint(words) {
+  const middle = words[Math.floor(words.length - 1)];
 
+  function inner(start, tempMid, end) {
+    // base case
+
+    // check if the tempMid is the point of rotation
+    if (words[tempMid - 1] > words[tempMid]) return words[tempMid];
+  }
+
+  inner(0, middle, words.length - 1);
 }
 
-const words = [
-  'ptolemaic',
-  'retrograde',
-  'supplant',
-  'undulate',
-  'xenoepist',
-  'asymptote',  // <-- rotates here!
-  'babka',
-  'banoffee',
-  'engender',
-  'karpatka',
-  'othellolagkage',
-];
+// const words = [
+//   'ptolemaic',
+//   'retrograde',
+//   'supplant',
+//   'undulate',
+//   'xenoepist',
+//   'asymptote',  // <-- rotates here!
+//   'babka',
+//   'banoffee',
+//   'engender',
+//   'karpatka',
+//   'othellolagkage',
+// ];
+
+const nums = [4,5,1,2,3];
+const nums2 = [9,1,2,3,4,5,6,7,8];
+const nums3 = [4,5,6,7,8,7,9,2];
 
 console.log(findRotationPoint(words));
