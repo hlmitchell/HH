@@ -16,13 +16,13 @@ The keypad has the following layout:
     │ 0 │
     └───┘
 He noted the PIN 1357, but he also said, it is possible that each of the digits he saw could actually 
-be another adjacent digit (horizontally or vertically, but not diagonally). E.g. instead of the 1 it 
+be another adkacent digit (horizontally or vertically, but not diagonally). E.g. instead of the 1 it 
 could also be the 2 or 4. And instead of the 5 it could also be the 2, 4, 6 or 8.
 
 He also mentioned, he knows this kind of locks. You can enter an unlimited amount of wrong PINs, they 
 never finally lock the system or sound the alarm. That's why we can try out all possible (*) variations.
 
-* possible in sense of: the observed PIN itself and all variations considering the adjacent digits
+* possible in sense of: the observed PIN itself and all variations considering the adkacent digits
 
 Can you help us to find all those variations? It would be nice to have a function, that returns an array 
 of all variations for an observed PIN with a length of 1 to 8 digits. We could name the function getPINs. 
@@ -43,48 +43,36 @@ expectations = {
 
 
 function getPINs(observed) {
-  const keypad = {
-    1: [1,2,4],
-    2: [1,2,3,5],
-    3: [2,3,6,],
-    4: [1,4,5,7],
-    5: [2,4,5,6,8],
-    6: [3,5,6,9],
-    7: [4,7,8],
-    8: [5,7,8,9,0],
-    9: [6,8,9],
-    0: [8,0]
-  }
+  var keypad = {
+    "1": ['1', '2', '4'],
+    "2": ['1', '2', '3', '5'],
+    "3": ['2', '3', '6'],
+    "4": ['1', '4', '5', '7'],
+    "5": ['2', '4', '5', '6', '8'],
+    "6": ['3', '5', '6', '9'],
+    "7": ['4', '7', '8'],
+    "8": ['5', '7', '8', '9', '0'],
+    "9": ['6', '8', '9'],
+    "0": ['8', '0'],
+  };
 
   const digits = observed.split('');
-  const options = [];
+  // options will start as a copy of the keypad value array for the first digit
+  const options = keypad[digits[0]].slice();
 
-  function inner(index) {
-    // base case
-    if (index >= digits.length) return;
-
-    if (options.length < keypad[digits[index]].length) {
-      for (let i = 0; i < keypad[digits[index]].length; i++) {
-        options.push([keypad[digits[index]][i]]);
+  for (let i = 1; i < digits.length; i++) { // loops through input number
+    const length = options.length;
+    for (let j = 0; j < length; j++) { // loops through options array, but the length is fixed
+      for (let k = 0; k < keypad[digits[i]].length; k++) { // loops through keypad value arrays
+        // deep copy
+        let copy = options[j] + '';
+        copy += keypad[digits[i]][k];
+        options.push(copy);
       }
-    } 
-    
-    else {
-      const length = options.length;
-      for (let i = 0; i < length; i++) {
-        for (let j = 0; j < keypad[digits[index]].length; j++) {
-          const copy = options[i].slice();
-          copy.push(keypad[digits[index]][j]);
-          options.push(copy);
-        }
-      }
-      options.splice(0, length);
     }
-
-    inner(++index);
+    options.splice(0, length);
   }
 
-  inner(0);
   return options;
 }
 
