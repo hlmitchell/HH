@@ -43,8 +43,48 @@ expectations = {
 
 
 function getPINs(observed) {
+  const keypad = {
+    1: [1,2,4],
+    2: [1,2,3,5],
+    3: [2,3,6,],
+    4: [1,4,5,7],
+    5: [2,4,5,6,8],
+    6: [3,5,6,9],
+    7: [4,7,8],
+    8: [5,7,8,9,0],
+    9: [6,8,9],
+    0: [8,0]
+  }
 
+  const options = [];
+
+  function inner(digits) {
+    // base case
+    if (digits.length === 0) return;
+
+    if (options.length < keypad[observed.split('')[0]].length) {
+      for (let i = 0; i < keypad[digits[0]].length; i++) {
+        options.push([keypad[digits[0]][i]]);
+      }
+    } else {
+      const length = options.length;
+      for (let i = 0; i < length; i++) {
+        for (let j = 0; j < keypad[digits[0]].length; j++) {
+          const copy = options[i].slice();
+          copy.push(keypad[digits[0]][j]);
+          options.push(copy);
+        }
+      }
+      options.splice(0, length);
+    }
+
+    inner(digits.splice(1));
+  }
+
+  inner(observed.split(''));
+  return options;
 }
 
+console.log(getPINs('11'));
 
 module.exports = getPINs
