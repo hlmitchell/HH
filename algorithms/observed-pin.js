@@ -62,11 +62,14 @@ function getPINs(observed) {
   function inner(index) {
     // base case
     if (index >= digits.length) return;
+
     if (options.length < keypad[digits[index]].length) {
       for (let i = 0; i < keypad[digits[index]].length; i++) {
         options.push([keypad[digits[index]][i]]);
       }
-    } else {
+    } 
+    
+    else {
       const length = options.length;
       for (let i = 0; i < length; i++) {
         for (let j = 0; j < keypad[digits[index]].length; j++) {
