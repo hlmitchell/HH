@@ -56,32 +56,32 @@ function getPINs(observed) {
     0: [8,0]
   }
 
+  const digits = observed.split('');
   const options = [];
 
-  function inner(digits) {
+  function inner(index) {
     // base case
-    if (digits.length === 0) return;
-
-    if (options.length < keypad[observed.split('')[0]].length) {
-      for (let i = 0; i < keypad[digits[0]].length; i++) {
-        options.push([keypad[digits[0]][i]]);
+    if (index >= digits.length) return;
+    if (options.length < keypad[digits[index]].length) {
+      for (let i = 0; i < keypad[digits[index]].length; i++) {
+        options.push([keypad[digits[index]][i]]);
       }
     } else {
       const length = options.length;
       for (let i = 0; i < length; i++) {
-        for (let j = 0; j < keypad[digits[0]].length; j++) {
+        for (let j = 0; j < keypad[digits[index]].length; j++) {
           const copy = options[i].slice();
-          copy.push(keypad[digits[0]][j]);
+          copy.push(keypad[digits[index]][j]);
           options.push(copy);
         }
       }
       options.splice(0, length);
     }
 
-    inner(digits.splice(1));
+    inner(++index);
   }
 
-  inner(observed.split(''));
+  inner(0);
   return options;
 }
 
