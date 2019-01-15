@@ -16,15 +16,46 @@
 // Your network information takes the form of an object where keys are usernames and values are arrays of other users nearby:
 
   const network = {
-  'Min'     : ['William', 'Jayden', 'Omar'],
-  'William' : ['Min', 'Noam'],
-  'Jayden'  : ['Min', 'Amelia', 'Ren', 'Noam'],
-  'Ren'     : ['Jayden', 'Omar'],
-  'Amelia'  : ['Jayden', 'Adam', 'Miguel'],
-  'Adam'    : ['Amelia', 'Miguel', 'Sofia', 'Lucas'],
-  'Miguel'  : ['Amelia', 'Adam', 'Liam', 'Nathan'],
-  'Noam'    : ['Nathan', 'Jayden', 'William'],
-  'Omar'    : ['Ren', 'Min', 'Scott']
+  'A' : ['B', 'D'],
+  'B' : ['A', 'E'],
+  'C' : ['F', 'G', 'E'],
+  'G' : ['C', 'D'],
+  'F' : ['C', 'H', 'I'],
+  'H' : ['F', 'I'],
+  'I' : ['F', 'H', 'N'],
+  'E' : ['N', 'C', 'B'],
+  'D' : ['G', 'A'],
+  'N' : ['I', 'E']
 };
 
-// For the network above, a message from Jayden to Adam should have this route: ['Jayden', 'Amelia', 'Adam']
+function meshMessage(start, end) {
+  const queue = [[start]];
+  const set = new Set();
+  let counter = 0;
+
+  while (queue.length > 0) {
+    const nextBatch = queue.shift();
+    counter += 1;
+
+    for (let i = 0; i < nextBatch.length; i++) {
+      
+      if (nextBatch[i] === end) return counter;
+      set.add(nextBatch[i]);
+
+      const tempArr = [];
+
+      network[nextBatch[i]].forEach(letter => {
+        if (!set.has(letter)) tempArr.push(letter);
+      })
+
+      if (tempArr.length > 0) queue.push(tempArr);
+    }
+  }
+
+  return counter;
+}
+
+// For the network above, a message from C to H should have this route: ['C', 'F', 'H'] or 3
+console.log(meshMessage('C', 'H'));
+
+console.log(meshMessage('A', 'N')); // 3
