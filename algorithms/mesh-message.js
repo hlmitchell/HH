@@ -36,20 +36,20 @@ function meshMessage(start, end) {
   while (queue.length > 0) {
     const nextBatch = queue.shift();
     counter += 1;
+    const tempArr = [];
 
     for (let i = 0; i < nextBatch.length; i++) {
-      
       if (nextBatch[i] === end) return counter;
-      set.add(nextBatch[i]);
-
-      const tempArr = [];
 
       network[nextBatch[i]].forEach(letter => {
-        if (!set.has(letter)) tempArr.push(letter);
+        if (!set.has(letter)) {
+          tempArr.push(letter);
+          set.add(letter);
+        }
       })
-
-      if (tempArr.length > 0) queue.push(tempArr);
     }
+
+    if (tempArr.length > 0) queue.push(tempArr);
   }
 
   return counter;
