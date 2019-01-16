@@ -1,4 +1,4 @@
-// Using a Linked list, find a duplicate node
+// Using a Linked list, foot of cycle
 
 function Node(val) {
   this.value = val;
@@ -12,10 +12,10 @@ head.next.next.next = new Node(4);
 head.next.next.next.next = new Node(5);
 head.next.next.next.next.next = head.next.next;
 
-function findDuplicate(node) {
+function findCycleRoot(node) {
 
 
 
 }
 
-console.log(findDuplicate(head));
+console.log(findCycleRoot(head));
