@@ -41,7 +41,7 @@ function Node(val) {
   this.parents = [];
 }
 
-function functionfindNodesWithZeroAndOneParents(nodes) {
+function buildRelationshipGraph(nodes) {
   const relationships = {}
 
   // create nodes based on childen
@@ -54,6 +54,13 @@ function functionfindNodesWithZeroAndOneParents(nodes) {
     relationships[child].parents.push(relationships[parent]);
   })
 
+  return relationships;
+}
+
+function functionfindNodesWithZeroAndOneParents(nodes) {
+  
+  const relationships = buildRelationshipGraph(nodes);
+
   // no parents first array, one parent second array
   const output = [[], []];
   Object.values(relationships).forEach(node => {
@@ -65,3 +72,26 @@ function functionfindNodesWithZeroAndOneParents(nodes) {
 }
 
 console.log(functionfindNodesWithZeroAndOneParents(parentChildPairs)); // => [[1,2,4], [7,10,5,8]]
+
+function hasCommonAncestor(nodes, val1, val2) {
+
+  const relationships = buildRelationshipGraph(nodes);
+  const set = new Set();
+  // add val1 and val2 parents to queue for starters (val1 and val2 dont count as ancestors)
+  const queue = [];
+  relationships[val1].parents.forEach(parent => queue.push(parent));
+  relationships[val2].parents.forEach(parent => queue.push(parent));
+
+  while (queue.length > 0) {
+    const currentNode = queue.shift();
+    if (set.has(currentNode)) return true;
+    set.add(currentNode);
+    currentNode.parents.forEach(parent => queue.push(parent));
+  }
+  return false;
+}
+
+console.log(hasCommonAncestor(parentChildPairs, 3, 8));// => false
+console.log(hasCommonAncestor(parentChildPairs, 5, 8));// => true
+console.log(hasCommonAncestor(parentChildPairs, 6, 8));// => true
+console.log(hasCommonAncestor(parentChildPairs, 1, 3));// => false
