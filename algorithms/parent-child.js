@@ -30,3 +30,38 @@ hasCommonAncestor(parentChildPairs, 6, 8) => true
 hasCommonAncestor(parentChildPairs, 1, 3) => false
 
 */
+
+const parentChildPairs = [
+  [1, 3], [2, 3], [3, 6], [5, 6],
+  [5, 7], [4, 5], [4, 8], [8, 10]
+];
+
+function Node(val) {
+  this.vertex = val;
+  this.parents = [];
+}
+
+function functionfindNodesWithZeroAndOneParents(nodes) {
+  const relationships = {}
+
+  // create nodes based on childen
+  nodes.forEach(node => {
+    const child = node[1];
+    const parent = node[0];
+
+    if (!relationships.hasOwnProperty(child)) relationships[child] = new Node(child);
+    if (!relationships.hasOwnProperty(parent)) relationships[parent] = new Node(parent);
+    relationships[child].parents.push(relationships[parent]);
+  })
+
+  // no parents first array, one parent second array
+  const output = [[], []];
+  Object.values(relationships).forEach(node => {
+    if (node.parents.length === 1) output[1].push(node.vertex);
+    else if (node.parents.length === 0) output[0].push(node.vertex);
+  })
+
+  return output;
+}
+
+console.log(functionfindNodesWithZeroAndOneParents(parentChildPairs)); // => [[1,2,4], [7,10,5,8]]
