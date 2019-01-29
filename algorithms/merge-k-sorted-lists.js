@@ -8,8 +8,29 @@
 // ]
 // Output: 1->1->2->3->4->4->5->6
 
-const merge2Lists = function(list1 ,list2) {
+let merge2Lists = function(list1 ,list2) {
+  let tracker1 = list1;
+  let tracker2 = list2;
+  let final = list1.val < list2.val ? list1 : list2;
+  let temp = final;
+  
+  while(tracker1 && tracker2) {
+    while (tracker1.next && tracker1.next.val < tracker2.val) {
+        tracker1 = tracker1.next;
+    }
+    temp = tracker1.next;
+    tracker1.next = tracker2;
+    tracker1 = temp;
     
+    while(tracker2.next && tracker2.next.val < tracker1.val) {
+      tracker2 = tracker2.next
+    }
+    temp = tracker2.next;
+    tracker2.next = tracker1;
+    tracker2 = temp;
+  }
+  
+  return final;
 }
 
 const mergeKLists = function(lists) {
