@@ -24,7 +24,48 @@
  * @return {number}
  */
 var lastRemaining = function(n) {
-
+    // garbage solution
+    if (n <= 2) return n;
+    if (n === 3) return 2;
+    
+    const tracker = {};
+    // true means right, false means left
+    let direction = false;
+    
+    // add all evens to tracker object because odd session will guarantee happen
+    for (let i = 2; i <= n; i += 2) {
+        tracker[i] = true;
+    }
+    
+    let length = Object.keys(tracker).length;
+    let max = n % 2 === 0 ? n : n - 1;
+    let min = 2;
+    let gap = 4;
+    let oneTimeCheck = true;
+    
+    while (length > 1) {
+        if (direction) {
+            for (let i = min; i <= max; i += gap) {
+                delete tracker[i];
+            }
+            min = min + (gap / 2);
+        } else {
+            for (let i = max; i >= min; i -= gap) {
+                delete tracker[i];
+            }
+            max = max - (gap / 2);
+            if (oneTimeCheck && Object.keys(tracker).length % 2 === 1) {
+                oneTimeCheck = false;
+                min = min + (gap / 2);
+            }
+        }
+        
+        direction = !direction;
+        gap += gap;
+        length = Math.floor(length / 2);
+    }
+    
+    return Object.keys(tracker)[0];
 
 
   // tried to solve using math.... didn't quite figure it out before timer went off
